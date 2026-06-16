@@ -1,10 +1,12 @@
-
+-- ================================================================
+--  Script Decompiler (Dark UI) - Start/Stop, Copy, Save
+-- ================================================================
 
 local CoreGui = game:GetService("CoreGui")
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 
-
+-- ---------------- THEME ----------------
 local Theme = {
     Background   = Color3.fromRGB(22, 22, 25),
     TitleBar     = Color3.fromRGB(14, 14, 16),
@@ -27,7 +29,7 @@ local decompilationData = {
     includeModules = false,
 }
 
-
+-- Instance classes treated as "non-script modules" when the toggle is on
 local MODULE_CLASSES = {
     ModuleScript     = true,
     Sound            = true,
@@ -38,7 +40,7 @@ local MODULE_CLASSES = {
     BindableFunction = true,
 }
 
-
+-- ---------------- HELPERS ----------------
 local function corner(parent, radius)
     local uiCorner = Instance.new("UICorner")
     uiCorner.CornerRadius = UDim.new(0, radius or 6)
@@ -54,6 +56,7 @@ local function stroke(parent, color, thickness)
     return uiStroke
 end
 
+-- Short random alphanumeric id, e.g. "a1b2c3"
 local function generateShortId(length)
     length = length or 6
     local chars = "abcdefghijklmnopqrstuvwxyz0123456789"
@@ -184,7 +187,9 @@ local function scanRemotes(source, scriptName, remoteStats)
     end
 end
 
-
+-- ================================================================
+--  NOTIFICATIONS
+-- ================================================================
 local NotificationUI = {}
 
 function NotificationUI:CreateNotification(title, message, duration)
@@ -247,7 +252,9 @@ function NotificationUI:CreateNotification(title, message, duration)
     end)
 end
 
-
+-- ================================================================
+--  MAIN GUI
+-- ================================================================
 local MainGUI = {}
 
 function MainGUI:Create()
@@ -480,7 +487,10 @@ function MainGUI:Create()
     footer.TextXAlignment = Enum.TextXAlignment.Left
     footer.Parent = mainFrame
 
-    
+    -- ================================================================
+    --  BUTTON LOGIC
+    -- ================================================================
+
     local function setStatus(text, color)
         statusText.Text = text
         statusText.TextColor3 = color or Theme.TextSecondary
